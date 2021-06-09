@@ -1,0 +1,53 @@
+<html>
+
+<head>
+  <title>La Presa de las niñas</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script>
+    AFRAME.registerComponent("foo", {
+      init: function () {
+        this.el.addEventListener("materialtextureloaded", e => {
+          let material = this.el.getObject3D("mesh").material;
+          material.map.format = THREE.RGBAFormat;
+          material.map.needsUpdate = true;
+        });
+      }
+    });
+  </script>
+  <script src="js/components/toggle_sound.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="button-container">
+    <button id="speaker-button">
+      <img id="speaker-img" src="img/sound_off.png" alt="texture" />
+    </button>
+  </div>
+
+  <a-scene>
+    <a-assets>
+      <img id="little-house" src="img/casetaSinBalustrada.png">
+      <img id="sky" src="img/PresaSky.jpg">
+
+      <audio id="girl-speaking" src="audio/audio.ogg" preload="auto"></audio>
+    </a-assets>
+
+    <a-plane position="5 -10 -20" scale="12 12 12" material="src: video/HoneyCamConAlpha50.webm; transparent: true;"
+      foo>
+    </a-plane>
+
+    <a-plane position="12 -8 -20" scale="24 24 24"
+      material="src:#little-house; transparent:true; opacity:1; alpha-test:0.5">
+    </a-plane>
+
+    <a-camera>
+      <a-cursor raycaster="objects: .clickable"></a-cursor>
+    </a-camera>
+
+    <a-sky id="my-sky" src="#sky" sound="src: #girl-speaking; loop: true" data-sounding="false"></a-sky>
+
+  </a-scene>
+</body>
+
+</html>
